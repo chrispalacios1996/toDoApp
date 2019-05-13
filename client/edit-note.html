@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="">
+  <style>
+    p {
+      color: white;
+      font-size: 30px;
+      margin-bottom: 3px;
+    }
+    #description {
+      height: 30px;
+    }
+    button {
+      margin-top: 5px;
+      height: 15px;
+      width: 90px;
+
+    ;
+  </style>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous">
+  </script>
+</head>
+
+<body style="background-color: black; text-align: center">
+  <a href="index.html">Go back to list</a>
+
+  <p>Title</p>
+  <input type="text" id="title" />
+  <p>Description</p>
+  <input type="text" id="description" />
+  <p>Priority</p>
+  <input type="text" id="description" />
+  <p>Due Date</p>
+  <input type="text" id="description" /> <br>
+  <button>Create Note</button>
+
+  <script>
+    $(document).ready(function() => {
+
+        const searchParams = new URLSearchParams(window.location.search);
+
+        if (searchParams.has("id")) {
+
+          $("#create-note").html("Save changes");
+
+          $.post("http://localhost:3000/readNotes", {}, (response) => {});
+
+            let notesArray = response.notes;
+            let = matchedNote;
+
+            for (let i = 0; i < notesArray.length; i++) {
+
+              if (notesArray[i]._id === searchParams.get("id")) {
+                matchedNote = noteArray[i];
+                break;
+              }
+            }
+
+          $("#title").val(matchedNote.title);
+          $("#description").val(matchedNote.description);
+          $("#priority").val(matchedNote.priority);
+          $("#due-date").val(matchedNote.dueDate);
+
+          $("#create-note").click(function() {
+
+            let updatedNote = {
+              username: null,
+              title: $("#title").val(),
+              description: $("#description").val(),
+              priority: $("#priority").val(),
+              dueDate: $("#due-date").val(),
+              status: true
+            }
+
+            $.post("http://localhost:3000/updateNote", updatedNote, () => {
+              $("body").append("<p>Your note was saved</p>");
+            });
+          });
+
+        });
+
+    } else {
+      console.log("Create mode");
+    }
+
+    $("#create-note").click(function() {
+
+      let newNOte = {
+        username: null,
+        title: $("#title").val(),
+        description: $("#description").val(),
+        priority: $("#priority").val(),
+        dueDate: $("#due-date").val(),
+        status: true
+    };
+
+    $.post("http://localhost:3000/createNote", newNote, () => {
+
+      $("body").append("<p>Your note was saved<p>");
+
+
+    });
+
+    });
+
+    });
+  </script>
+
+</body>
+
+</html>

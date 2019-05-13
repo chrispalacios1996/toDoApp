@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+    <head>
+	<meta charset="utf8">
+	<title></title>
+	<link>
+	<script></script>
+    </head>	
+
+    <body>
+
+	<script>
+
+		$(document).ready(function() => {
+		
+	$.post("http://localhost:3000/readNotes", {}, (response) => {
+		     console.log(response);
+	   	     let notesArray = response.notes;
+	             for (let i = 0; i <notesArray.length; i++) {
+			let currentNote = notesArray[i];
+			let listItem =
+			    `<li data-id="${currentNote._id}">
+				${currentNote.title},
+				${currentNote.description},
+				${currentNote.dueDate},
+				<a href="http://localhost:3000/edit-note.html?id=${currentNote._id}">Edit</a>
+			    </li>`;
+
+		$("#list ul").append(listItem);
+
+	}
+
+	$(".removeButton").click(function() {
+		let idToDelete = {_id: $(this).parent().attr("data-id")};
+
+		$.post("http://localhost:3000/deleteNote", idToDelete, (response) => {
+			console.log(response);
+			if (response !=500;
+
+	</script>
+    </body>
+
+</html>
